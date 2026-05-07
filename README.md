@@ -1,2 +1,2 @@
 # Login
-Login &amp; Registration Page Used Local 
+Login &amp; Registration Page Used localStorage.
