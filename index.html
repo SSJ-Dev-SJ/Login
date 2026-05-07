@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="toast" id="toast"></div>
+    
+    <!-- AUTH CONTAINER -->
+    <div class="app-container" id="authContainer">
+        <div class="card">
+            <!-- Login Form -->
+            <div id="loginForm">
+                <div class="card-header">
+                    <div class="icon-circle"><i class="fas fa-lock"></i></div>
+                    <h2>Welcome Back</h2>
+                    <p>Sign in with your credentials</p>
+                </div>
+                <form autocomplete="off" novalidate>
+                    <div class="form-group">
+                        <label for="loginIdentifier">Username or Email</label>
+                        <input type="text" id="loginIdentifier" placeholder="Enter username or email"
+                            autocomplete="username">
+                        <span class="error-msg" id="loginIdError">Required</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="loginPassword" placeholder="Enter password"
+                                autocomplete="current-password">
+                            <button type="button" class="toggle-password" tabindex="-1"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <span class="error-msg" id="loginPassError">Password is required</span>
+                    </div>
+                    <div class="remember-row">
+                        <label><input type="checkbox" id="rememberMe"> Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="loginBtn">
+                        <span class="spinner" id="loginSpinner"></span> Sign In
+                    </button>
+                </form>
+                <div class="toggle-link">No account? <a id="showRegister">Create one</a></div>
+            </div>
+    
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <div class="card-header">
+                    <div class="icon-circle"><i class="fas fa-user-plus"></i></div>
+                    <h2>Create Account</h2>
+                    <p>Join us in a few seconds</p>
+                </div>
+                <form autocomplete="off" novalidate>
+                    <div class="form-group">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" placeholder="Choose a username" autocomplete="username">
+                        <span class="error-msg" id="regUserError">Min 3 characters</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" placeholder="your@email.com" autocomplete="email">
+                        <span class="error-msg" id="regEmailError">Valid email required</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="regPassword" placeholder="Create a strong password"
+                                autocomplete="new-password">
+                            <button type="button" class="toggle-password" tabindex="-1"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <div class="strength-meter">
+                            <div class="strength-meter-fill" id="strengthFill"></div>
+                        </div>
+                        <div class="strength-text" id="strengthText"></div>
+                        <span class="error-msg" id="regPassError">Min 6 characters</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="regConfirmPassword" placeholder="Confirm password"
+                                autocomplete="new-password">
+                            <button type="button" class="toggle-password" tabindex="-1"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <span class="error-msg" id="regConfirmError">Passwords must match</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="registerBtn">
+                        <span class="spinner" id="regSpinner"></span> Create Account
+                    </button>
+                </form>
+                <div class="toggle-link">Already have an account? <a id="showLogin">Sign in</a></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- DASHBOARD CONTAINER -->
+    <div class="app-container" id="dashboardContainer">
+        <div class="dashboard-card">
+            <div class="dash-header">
+                <span class="brand"><i class="fas fa-home"></i> MyDashboard</span>
+                <div class="user-info">
+                    <span class="user-avatar" id="dashAvatar"><i class="fas fa-user"></i></span>
+                    <span class="user-name" id="dashUsername">User</span>
+                    <span class="session-badge" id="sessionBadge">Session</span>
+                </div>
+                <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="dash-body">
+                <!-- Welcome & Login Time -->
+                <div class="welcome-row">
+                    <div class="welcome-text">
+                        <h3><i class="fas fa-hand-sparkles"></i> Welcome, <span id="dashGreeting">User</span>!</h3>
+                        <p>Here's your account summary</p>
+                    </div>
+                    <div class="login-time-card">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <div class="label">Logged in at</div>
+                            <div class="value" id="loginTimeDisplay">-</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-value">PBKDF2</div>
+                            <div class="stat-label">Hashing Algorithm</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-cog"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statIterations">100k</div>
+                            <div class="stat-label">Iterations</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statMemberSince">-</div>
+                            <div class="stat-label">Member Since</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-hashtag"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statLogins">1</div>
+                            <div class="stat-label">Total Logins</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Profile Section -->
+                <div class="profile-section">
+                    <h4><i class="fas fa-id-card"></i> Profile Details</h4>
+                    <div class="profile-grid">
+                        <div class="profile-item">
+                            <i class="fas fa-user"></i>
+                            <span class="key">Username</span>
+                            <span class="val" id="profileUsername">-</span>
+                        </div>
+                        <div class="profile-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="key">Email</span>
+                            <span class="val" id="profileEmail">-</span>
+                        </div>
+                        <div class="profile-item">
+                            <i class="fas fa-fingerprint"></i>
+                            <span class="key">User ID</span>
+                            <span class="val" id="profileId">-</span>
+                        </div>
+                        <div class="profile-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span class="key">Created</span>
+                            <span class="val" id="profileCreated">-</span>
+                        </div>
+                        <div class="profile-item">
+                            <i class="fas fa-wifi"></i>
+                            <span class="key">Session</span>
+                            <span class="val" id="profileSession">-</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- All Users Toggle -->
+                <button class="users-toggle" id="toggleUsersBtn">
+                    <i class="fas fa-users"></i> Show All Registered Users (localStorage array)
+                </button>
+                <div class="all-users-panel" id="allUsersPanel"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
