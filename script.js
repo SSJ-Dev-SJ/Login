@@ -378,7 +378,7 @@
                 passwordHash,
                 createdAt: new Date().toISOString(),
                 lastLogin: new Date().toISOString(),
-                loginCount: 1,
+                loginCount: 0,
             };
             const users = getAllUsers();
             users.push(newUser);
